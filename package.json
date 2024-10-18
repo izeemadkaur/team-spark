@@ -1,0 +1,11 @@
+{
+  "name": "injector",
+  "version": "1.0.0",
+  "main": "bs-config.js",
+  "scripts": {
+    "start": "browser-sync start --config bs-config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
