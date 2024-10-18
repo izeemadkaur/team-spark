@@ -1,19 +1,33 @@
 (function () {
   console.log("inject.js has started.");
 
+  const html_file_name = "index.html";
+
+  function injectStylesheet() {
+    if (!document.querySelector('link[href="/spark_team.css"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "/spark_team.css";
+      link.type = "text/css";
+      document.head.appendChild(link);
+      console.log("Injected spark_team.css into head.");
+    } else {
+      console.log("spark_team.css is already injected.");
+    }
+  }
+
   function injectContent() {
     console.log("Starting content injection.");
-    const file_name = "index.html";
 
-    fetch(`/${file_name}`)
+    fetch(`/${html_file_name}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch file: " + response.statusText);
+          throw new Error("Failed to fetch html file: " + response.statusText);
         }
         return response.text();
       })
       .then((injectHtml) => {
-        console.log("Fetched file successfully.");
+        console.log("Fetched html file successfully.");
 
         const cmsPlaceholderElements =
           document.querySelectorAll('[id^="spark-"]');
@@ -45,7 +59,7 @@
             regex,
             replacements[placeholder]
           );
-          console.log(`Replaced '${placeholder}' in file.`);
+          console.log(`Replaced '${placeholder}' in html file.`);
         });
 
         const injectorDiv = document.querySelector(".team-spark-html-injector");
@@ -55,7 +69,9 @@
             "Injected HTML content into .team-spark-html-injector with placeholders replaced."
           );
         } else {
-          console.warn("No .team-spark-html-injector element found on the page.");
+          console.warn(
+            "No .team-spark-html-injector element found on the page."
+          );
         }
 
         setupMutationObserver();
@@ -91,13 +107,14 @@
               );
 
               const replacementContent = node.innerHTML;
-              replacements[placeholder] = replacementContent;
               console.log(
                 `Prepared replacement for '${placeholder}':`,
                 replacementContent
               );
 
-              const injectorDiv = document.querySelector(".team-spark-html-injector");
+              const injectorDiv = document.querySelector(
+                ".team-spark-html-injector"
+              );
               if (injectorDiv && injectorDiv.innerHTML.includes(placeholder)) {
                 const regex = new RegExp(escapeRegExp(placeholder), "g");
                 injectorDiv.innerHTML = injectorDiv.innerHTML.replace(
@@ -127,11 +144,13 @@
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
-      console.log("DOM fully loaded. Running injectContent.");
+      console.log("DOM fully loaded. Injecting stylesheet and content.");
+      injectStylesheet();
       injectContent();
     });
   } else {
-    console.log("DOM already loaded. Running injectContent.");
+    console.log("DOM already loaded. Injecting stylesheet and content.");
+    injectStylesheet();
     injectContent();
   }
 })();
