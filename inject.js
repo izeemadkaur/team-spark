@@ -7,7 +7,7 @@
     if (!document.querySelector('link[href="/spark_team.css"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "/spark_team.css";
+      link.href = "src/spark_team.css";
       link.type = "text/css";
       document.head.appendChild(link);
       console.log("Injected spark_team.css into head.");
@@ -19,7 +19,7 @@
   function injectContent() {
     console.log("Starting content injection.");
 
-    fetch(`/${html_file_name}`)
+    fetch(`src/${html_file_name}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch html file: " + response.statusText);

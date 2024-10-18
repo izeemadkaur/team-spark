@@ -1,7 +1,7 @@
 module.exports = {
   proxy: "https://dealer21750.dealeron.com/about.htm",
   serveStatic: ["./"],
-  files: ["spark_team.css", "inject.html", "inject.js"],
+  files: ["src/spark_team.css", "src/index.html", "inject.js"],
   injectChanges: true,
   snippetOptions: {
     rule: {
