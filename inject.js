@@ -4,7 +4,7 @@
   const html_file_name = "index.html";
 
   function injectStylesheet() {
-    if (!document.querySelector('link[href="/spark_team.css"]')) {
+    if (!document.querySelector('link[href="/src/spark_team.css"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = "src/spark_team.css";
